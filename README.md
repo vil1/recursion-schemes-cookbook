@@ -123,5 +123,6 @@ Both come with its own set of challenges (although those sets have a non-empty i
 * [Working With Schemas](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas)
   * [Working With Schemas Only](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#working-with-schemas-only)
     * [Knowing Where You Are](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#knowing-where-you-are)
+    * [Remembering What You Did Before](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#remembering-what-you-did-before)
   * [Working With Schemas and Data](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#working-with-schemas-and-data)
 * [Working With ASTs](TODO)

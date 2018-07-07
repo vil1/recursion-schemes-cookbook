@@ -73,4 +73,49 @@ def labelWithDepth[T, U](t: T)(implicit T: Recursive.Aux[T, SchemaF],
   }
 ```
 
+### Remembering What You Did Before
+
+The main strength of recursion schemes is that you get to process a "tree" one "node" at a time, which means that your algebra is oblivious of the result it produced before (elswhere on the "tree"). 
+
+Lets be a bit more precise. The carrier of any f-algebra carries precisely the result of the previous execution of the said f-algebra, so we always rembember what we did just before. But what if we need to remember what we did on a totally unrelated part of the tree?
+
+Concretely, say we want to serialize any `T` recursive on `SchemaF` to `org.apache.avro.Schema`. It's definitely doable since we can express every possible `SchemaF` case in terms of `avro.Schema` structure-wise. The problem is that the Avro API mandates that, when building a `Schema`, we register every record (the Avro representation of our `StructF`) under a name that is unique across the whole `Schema`. This is because Avro is primarily meant as a binary representation of some classes in a codebase, but that's not the case there, so these mandatory unique names are irrelevant to us. All we're interested in is the *structure* of our `SchemaF`, so if we're able to deterministically derive a name from an arbitrary `SchemaF` we're good to go, provided that we can remember the name we've already registered.
+
+So we need to write an algebra that works in a *context* were it can *register* and *lookup* facts, that is a context that's able to maintain an *updatable state*, that is the `State` monad.
+
+In conclusion, we want to write an `AlgebraM[State[Registry, ?], SchemaF, avro.Schema]`. In the `Registry` managed by the state monad, we'll store a mapping from name to `Schema` of all the partial records we've already built. That way we'll be able to avoid duplicate names.
+
+``` scala
+import org.apache.avro.Schema
+
+type Registry = Map[String, Schema]
+
+def name(structure: Map[String, Schema]): String                         = ???
+def buildRecordSchema(name: String, fields: Map[String, Schema]): Schema = ???
+
+def toAvroAlg: AlgebraM[State[Registry, ?], SchemaF, Schema] = {
+
+  case StructF(fields) =>
+    State { registry =>
+      val n = name(fields)
+      if (registry.contains(name)) // recalling what we did in the past
+        (registry, registry(name))
+      else {
+        val schema = buildRecordSchema(name, fields)
+        (
+          registry + (name -> schema), // memorizing what we just did 
+          schema
+        ) 
+      }
+    }
+
+}
+
+
+def toAvro[T](t: T)(implicit T: Recursive.Aux[T, SchemaF]): Schema = 
+  t.cataM(toAvroAlg).run(Map.empty)._2
+```
+
+As a bonus, since we reuse a record we've already registered when we encounter a `StructF` that has the exact same structure (provided that `name` is injective) we're guaranttied to build the most compact `Schema` we can.
+
 ## Working With Schemas And Data
