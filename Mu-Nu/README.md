@@ -30,9 +30,9 @@ data Fix f = Fix { unfix :: f (Fix f) }
 final case class Fix[F[_]](unfix: F[Fix[F]])
 ```
 
-These use “direct recursion” to show how `Fix` repeatedly nests the same functor recursively. But these two similar statements have quite different meanings – since Haskell is lazy by default, it’s `Fix` isn’t finitary, while Scala’s is. So, for some pedagogical ease, the notion of least/greatest fixed points is glossed over. In summary – Haskell’s `Fix` is akin to `Nu`, while Scala’s is akin to `Mu`.
+These use “direct recursion” to show how `Fix` repeatedly nests the same functor recursively. But these two similar statements have quite different meanings – since Haskell is lazy by default, its `Fix` isn’t finitary, while Scala’s is. So, for some pedagogical ease, the notion of least/greatest fixed points is glossed over. In summary – Haskell’s `Fix` is akin to `Nu`, while Scala’s is akin to `Mu`.
 
-You may be familiar with the phrase “ [making illegal states unrepresentable]”. This is often touted as a benefit of strong type systems. What this generally means is having the fewest values of your type without precluding any valid ones. So, as a rough guideline, we should try to use `Mu` when we can, and fall back to `Nu` when we have to.
+You may be familiar with the phrase “[making illegal states unrepresentable]”. This is often touted as a benefit of strong type systems. What this generally means is having the fewest values of your type without precluding any valid ones. So, as a rough guideline, we should try to use `Mu` when we can, and fall back to `Nu` when we have to.
 
 ## When does this question come up?
 
