@@ -1,6 +1,6 @@
 # Streaming
 
-“I want to use `anaM`.”
+“I want `anaM`.”
 
 You probably don’t.
 
@@ -8,9 +8,9 @@ You probably don’t.
 anaM :: (Corecursive t f, Traversable f) => (a -> m (f a)) -> a -> m t
 ```
 
-This looks like a reasonable enough type, and it‘s not hard to implement. But when you think through what it has to do, you can see the problem.
+This looks like a reasonable enough type, and it‘s not hard to implement in most languages. But when you think through what it has to do, you can see the problem.
 
-Say you have `expandFoo :: Natural -> (Either String (Foo Natural))` as your algebra. Let’s first look at it with (non-monadic `ana)`.
+Say you have `expandFoo :: Natural -> Either String (Foo Natural)` as your algebra. Let’s first look at it with (non-monadic `ana)`.
 
 ```haskell
 ana (Compose <<< expandFoo) :: a -> Nu (Compose (Either String) Foo)

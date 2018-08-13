@@ -118,11 +118,24 @@ In turns out that people seem to use recursion schemes to solve two major famili
 
 Both come with its own set of challenges (although those sets have a non-empty intersection). This cookbook is therefore divided in two main parts, each dedicated to one of these two families of problems.
 
-## Table of content
+## Table of contents
 
-* [Working With Schemas](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas)
-  * [Working With Schemas Only](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#working-with-schemas-only)
-    * [Knowing Where You Are](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#knowing-where-you-are)
-    * [Remembering What You Did Before](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#remembering-what-you-did-before)
-  * [Working With Schemas and Data](https://github.com/vil1/recursion-schemes-cookbook/tree/master/schemas#working-with-schemas-and-data)
-* [Working With ASTs](TODO)
+* [Working With Schemas](schemas/README.md)
+  * [Working With Schemas Only](schemas/README.md#working-with-schemas-only)
+    * [Knowing Where You Are](schemas/README.md#knowing-where-you-are)
+    * [Remembering What You Did Before](schemas/README.md#remembering-what-you-did-before)
+  * [Working With Schemas and Data](schemas/README.md#working-with-schemas-and-data)
+* Working With ASTs
+  * [Which fixed-point operator should I use?](Mu-Nu/README.md)
+  * [How do I convert between (co)recursive structures?](NaturalTransformations/README.md)
+  * [How do I pass data toward the leaves?](AttributeGrammars/README.md)
+* [Streaming](Streaming/README.md)
+
+### Sections Yet to be Written
+
+* How do I restrict which nodes can occur where? (mutual recursion, inductive type families)
+* How can I apply this to DAGs? (`RootedGraph`)
+* Fixing frustrations of directly-recursive types
+  * How do I avoid creating two ASTs that are 90% the same, so I can tighten the type after a transformation? (`Coproduct`)
+  * How do I annotate a tree? (`zygo`, `EnvT`)
+  * How do I compose algebras and coalgebras efficiently?
