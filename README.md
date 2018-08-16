@@ -29,6 +29,7 @@ Both come with its own set of challenges (although those sets have a non-empty i
   * How can I apply this to DAGs? (`RootedGraph`)
   * Fixing frustrations of directly-recursive types
     * How do I avoid creating two ASTs that are 90% the same, so I can tighten the type after a transformation? (`Coproduct`)
-    * How do I annotate a tree? (`zygo`, `EnvT`)
+    * [How do I annotate a tree?](Annotation/README.md)
     * How do I compose algebras and coalgebras efficiently?
 * [Streaming](Streaming/README.md)
+* [Glossary](glossary.md)
